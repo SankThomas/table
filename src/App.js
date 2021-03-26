@@ -1,72 +1,45 @@
-import React from "react"
-import AddButton from "./AddButton"
+import React, { useState } from "react"
+import { Button } from "@material-ui/core"
+import Table from "./Table"
 
 const App = () => {
+  const [row, setRow] = useState("")
+  const [list, setList] = useState([])
+  const [isEditing, setIsEditing] = useState(false)
+  const [rowID, setRowID] = useState(null)
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+
+    if (row && isEditing) {
+      // Deal with edit
+    } else {
+      const newItem = { id: new Date().getTime().toString(), title: row }
+      setList([...list, newItem])
+      setRow("")
+    }
+  }
+
   return (
     <>
       <section>
-        <div style={{ marginBottom: 10 }}>
-          <AddButton />
+        <div>
+          <form onSubmit={handleSubmit}>
+            <Button
+              variant="contained"
+              color="primary"
+              type="Submit"
+              style={{ marginBottom: 10 }}
+            >
+              Add Row
+            </Button>
+
+            <div>
+              <Table items={list} rows={row} setRows={setRow} />
+              <Button color="secondary">Clear Table</Button>
+            </div>
+          </form>
         </div>
-        <table>
-          <tr>
-            <th>Task Name</th>
-            <th>Linked Status</th>
-            <th>Start After (Number of Days)</th>
-            <th>Document Mandatory?</th>
-            <th>Auto Allocation?</th>
-          </tr>
-          <tr>
-            <td>
-              <select>
-                <option value="1" selected>
-                  One
-                </option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-              </select>
-            </td>
-            <td>
-              <select>
-                <option value="1" selected>
-                  Four
-                </option>
-                <option value="2">Five</option>
-                <option value="3">Six</option>
-              </select>
-            </td>
-            <td>
-              <input
-                type="number"
-                name="number"
-                id="number"
-                placeholder="Enter days"
-              />
-            </td>
-            <td>
-              {/* Toggle button */}
-              <div class="toggle">
-                <input type="checkbox" class="checkbox" id="checkbox" />
-
-                <label for="checkbox" class="label">
-                  <div class="ball"></div>
-                </label>
-              </div>
-              {/* End of toggle button  */}
-            </td>
-            <td>
-              {/* Toggle button */}
-              <div class="toggle">
-                <input type="checkbox" class="checkbox" id="checkbox2" />
-
-                <label for="checkbox2" class="label">
-                  <div class="ball"></div>
-                </label>
-              </div>
-              {/* End of toggle button  */}
-            </td>
-          </tr>
-        </table>
       </section>
     </>
   )
