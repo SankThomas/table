@@ -32,6 +32,10 @@ td {
   padding: 10px;
 }
 
+tr:nth-child(odd) {
+  background-color: #f1f1f1;
+}
+
 select,
 input {
   width: 100%;
